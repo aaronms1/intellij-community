@@ -2206,13 +2206,14 @@ abstract class AbstractKotlinMavenImporterTest : KotlinMavenImportingTestCase() 
         @Test
         fun testJpsCompilerUnsupportedVersionUp() {
             val maxVersion = KotlinJpsPluginSettings.jpsMaximumSupportedVersion
+            val bundledVersion = KotlinJpsPluginSettings.bundledVersion
             val versionToImport = KotlinVersion(maxVersion.major, maxVersion.minor, maxVersion.minor + 1)
             val text = catchNotificationText(myProject) {
                 doUnsupportedVersionTest(versionToImport.toString())
             }
 
             assertEquals(
-                "The bundled version (1.7.0-RC-246) of the Kotlin JPS plugin will be used<br>" +
+                "The bundled version (${bundledVersion}) of the Kotlin JPS plugin will be used<br>" +
                         "The reason: Kotlin JPS compiler maximum supported version is '$maxVersion' but '$versionToImport' is specified",
                 text
             )
